@@ -1,15 +1,16 @@
-#### Base Colors
+#### Brand Colors
+The brand palette’s primary usage is Puppet’s brand color, Amber. This particular color should only be used in the context of Puppet logos, when applicable, and not used in any other aspect of the product.
 
 ```jsx
-const colors = ['amber', 'teal', 'purple', 'red'];
+const colors = ['brand-primary', 'brand-secondary'];
 
 <Colors colors={colors} />;
 ```
 
-#### Brand Colors
+#### Base Colors
 
 ```jsx
-const colors = ['brand-primary', 'brand-secondary'];
+const colors = ['amber', 'teal', 'purple', 'red'];
 
 <Colors colors={colors} />;
 ```
