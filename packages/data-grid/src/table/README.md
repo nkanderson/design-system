@@ -615,59 +615,92 @@ const columns = [
 
 class StatefulParent extends React.Component {
 
- constructor() {
-    super()
-    this.state = { data, checkAll: undefined, };
+  constructor() {
+    super();
+    this.state = {
+      data,
+      checkAll: false,
+      IndeterminateState: false,
+    };
     this.onHeaderSelected = this.onHeaderSelected.bind(this);
     this.onRowSelected = this.onRowSelected.bind(this);
-      }
+  }
 
+  checkIfIndeterminateState(state) {
+    const { data, IndeterminateState, checkAll } = this.state;
+    let x = data.filter(e => e.selected === true);
 
-      onRowSelected(checked, row) {
-        const { data: stateData } = this.state;
-        // find the index of object from array that you want to update
-        const objIndex = stateData.findIndex(obj => obj.unique === row.unique);
+    if (x.length > 0 && IndeterminateState === false && checkAll === false) {
+      this.setState({ IndeterminateState: true });
+    } else if (
+      (x.length === 0 && IndeterminateState === true) ||
+      (x.length === 0 && checkAll === true)
+    ) {
+      this.setState({ IndeterminateState: false, checkAll: false });
+    }
+    if (x.length === data.length && checkAll === false) {
+      this.setState({ IndeterminateState: false, checkAll: true });
+    }
+  }
 
-        // make new object of updated object.
-        const updatedObj = { ...stateData[objIndex], selected: checked };
+  onHeaderSelected(checked) {
+    const { data: stateData, IndeterminateState } = this.state;
 
-        // make final new array of objects by combining updated object.
-        const updatedData = [
-          ...stateData.slice(0, objIndex),
-          updatedObj,
-          ...stateData.slice(objIndex + 1),
-        ];
+    this.setState({ IndeterminateState: false, checkAll: checked });
 
-        this.setState({
-          data: updatedData,
-        });
-      };
+    for (let i = 0; i < stateData.length; i += 1) {
+      stateData[i].selected = checked;
+    }
+  }
 
-      onHeaderSelected(checked) {
-        console.log('clicked header')
-        this.setState({ checkAll: checked });
-        const { data: stateData } = this.state;
-        console.log(data)
+  onRowSelected(checked, row) {
+    const { data: stateData, checkAll } = this.state;
 
-        for (let i = 0; i < stateData.length; i += 1) {
-          stateData[i].selected = checked;
-        }
-      };
+    if (checkAll) {
+      this.setState({ checkAll: false });
+    }
 
-      render() {
-        const { data: stateData, checkAll: headerCheckboxState } = this.state;
+    // find the index of object from array that you want to update
+    const objIndex = stateData.findIndex(obj => obj.unique === row.unique);
 
-        return (
-          <div>
-            <Table
-              data={stateData}
-              columns={columns}
-              selectable
-              onRowChecked={this.onRowSelected}
-              onHeaderChecked={this.onHeaderSelected}
-              headerCheckState={headerCheckboxState}
-            />
-          </div>
+    // make new object of updated object.
+    const updatedObj = { ...stateData[objIndex], selected: checked };
+
+    // make final new array of objects by combining updated object.
+    const updatedData = [
+      ...stateData.slice(0, objIndex),
+      updatedObj,
+      ...stateData.slice(objIndex + 1),
+    ];
+
+    this.checkIfIndeterminateState(),
+      this.setState({
+        data: updatedData,
+      });
+  }
+
+  render() {
+    const {
+      data: stateData,
+      checkAll: headerCheckboxState,
+      IndeterminateState,
+    } = this.state;
+
+    this.checkIfIndeterminateState();
+
+    return (
+      <div>
+        <Table
+          data={stateData}
+          columns={columns}
+          selectable
+          onRowChecked={this.onRowSelected}
+          onHeaderChecked={this.onHeaderSelected}
+          headerCheckState={headerCheckboxState}
+          headerIndeterminateState={IndeterminateState}
+          checkIfIndeterminateState={this.checkIfIndeterminateState}
+        />
+      </div>
         );
       }
     };

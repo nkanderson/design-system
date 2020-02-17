@@ -39,6 +39,8 @@ const propTypes = {
   onHeaderChecked: func,
   /** Allows the state of the checkbox to be defined  */
   headerCheckState: bool,
+    /** Allows users to show an dash instead of a tick  */
+    headerIndeterminateState: bool,
 };
 
 const defaultProps = {
@@ -48,6 +50,7 @@ const defaultProps = {
   selectable: false,
   onHeaderChecked: () => {},
   headerCheckState: false,
+  headerIndeterminateState: false,
 };
 
 class ColumnHeader extends Component {
@@ -71,6 +74,7 @@ class ColumnHeader extends Component {
       selectable,
       onHeaderChecked,
       headerCheckState,
+      headerIndeterminateState,
     } = this.props;
     const { direction, sortDataKey } = sortedColumn;
 
@@ -90,6 +94,7 @@ class ColumnHeader extends Component {
                 label=""
                 name=""
                 className="dg-table-header-checkbox-element"
+                indeterminate={headerIndeterminateState}
               />
             </th>
           ) : null}

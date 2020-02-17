@@ -76,6 +76,8 @@ const propTypes = {
   onHeaderChecked: func,
   /** State of the table header checkbox */
   headerCheckState: bool,
+    /** Variable passed to the header to say if a bash icon should be used */
+    headerIndeterminateState: bool,
 };
 
 const defaultProps = {
@@ -97,6 +99,7 @@ const defaultProps = {
   onRowChecked: () => {},
   onHeaderChecked: () => {},
   headerCheckState: false,
+  headerIndeterminateState: true,
 };
 
 const defaultColumnDefs = {
@@ -153,6 +156,7 @@ class Table extends Component {
       onHeaderChecked,
       headerCheckState,
       onSort,
+      headerIndeterminateState,
       ...rest
     } = this.props;
 
@@ -179,6 +183,7 @@ class Table extends Component {
             columnHeaderCallBack={this.columnHeaderCallBack}
             onHeaderChecked={onHeaderChecked}
             headerCheckState={headerCheckState}
+            headerIndeterminateState={headerIndeterminateState}
           />
           <tbody>
             {data.map((rowData, rowIndex) => {
