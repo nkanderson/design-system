@@ -76,8 +76,8 @@ const propTypes = {
   onHeaderChecked: func,
   /** State of the table header checkbox */
   headerCheckState: bool,
-    /** Variable passed to the header to say if a bash icon should be used */
-    headerIndeterminateState: bool,
+  /** Variable passed to the header to say if a bash icon should be used */
+  headerIndeterminateState: bool,
 };
 
 const defaultProps = {

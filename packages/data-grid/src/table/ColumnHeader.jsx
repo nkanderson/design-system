@@ -39,8 +39,8 @@ const propTypes = {
   onHeaderChecked: func,
   /** Allows the state of the checkbox to be defined  */
   headerCheckState: bool,
-    /** Allows users to show an dash instead of a tick  */
-    headerIndeterminateState: bool,
+  /** Allows users to show an dash instead of a tick  */
+  headerIndeterminateState: bool,
 };
 
 const defaultProps = {
