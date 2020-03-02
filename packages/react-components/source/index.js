@@ -29,6 +29,7 @@ import Breadcrumb from './react/library/breadcrumb';
 import ConfirmationModal from './react/library/confirmation-modal';
 import Code from './react/library/code';
 import Tag from './react/library/tag';
+import RadioButton from './react/library/radiobutton';
 
 export {
   ActionSelect,
@@ -59,4 +60,5 @@ export {
   ConfirmationModal,
   Code,
   Tag,
+  RadioButton,
 };
